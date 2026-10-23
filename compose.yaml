@@ -1,0 +1,47 @@
+services:
+  front_projektx:
+    build: front_projektx
+    restart: always
+
+  back_projektx:
+    build: back_projektx
+    restart: always
+    depends_on:
+      - db_projektx
+
+  db_projektx:
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker compose
+    #shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_USER: userpostgres
+      POSTGRES_PASSWORD: MyProduction123.
+      POSTGRES_DB: moja_baza
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer_projektx:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+
+  nginx_projektx:
+    build: nginx_projektx
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - front_projektx
+      - back_projektx
+
+volumes:
+  postgres_data:
