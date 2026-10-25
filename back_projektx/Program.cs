@@ -1,7 +1,11 @@
+using back_projektx.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDb>();
 
 var app = builder.Build();
 
@@ -25,5 +29,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+InitializeDatabase.Initialize();
 
 app.Run();

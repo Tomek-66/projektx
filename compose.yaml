@@ -23,7 +23,7 @@ services:
     environment:
       POSTGRES_USER: userpostgres
       POSTGRES_PASSWORD: MyProduction123.
-      POSTGRES_DB: moja_baza
+      POSTGRES_DB: projektxdb
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
